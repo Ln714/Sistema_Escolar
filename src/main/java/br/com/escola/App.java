@@ -27,15 +27,10 @@ public class App {
             System.out.println("\n===== SISTEMA ESCOLAR =====");
 
             System.out.println("1 - Cadastrar aluno");
-
             System.out.println("2 - Listar alunos");
-
             System.out.println("3 - Atualizar aluno");
-
             System.out.println("4 - Remover aluno");
-
             System.out.println("0 - Sair");
-
             System.out.print("Escolha uma opção: ");
 
             opcao = scanner.nextInt();
@@ -50,6 +45,9 @@ public class App {
 
                     System.out.print("Nome: ");
                     novoAluno.setNome(scanner.nextLine());
+
+                    System.out.println("CPF:");
+                    novoAluno.setCpf(scanner.nextLine());
 
                     System.out.print("Email: ");
                     novoAluno.setEmail(scanner.nextLine());
@@ -112,6 +110,11 @@ public class App {
 
                     System.out.print("Novo nome: ");
                     alunoAtualizar.setNome(
+                            scanner.nextLine()
+                    );
+
+                    System.out.print("Novo cpf: ");
+                    alunoAtualizar.setCpf(
                             scanner.nextLine()
                     );
 

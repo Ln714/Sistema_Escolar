@@ -18,7 +18,7 @@ public class AlunoDAOImpl implements AlunoDAO {
     public void cadastrar(Aluno aluno) {
 
         String sql = """
-                INSERT INTO aluno(nome, email, data_nascimento) VALUES (?, ?, ?)
+                INSERT INTO aluno(nome, cpf,email, data_nascimento) VALUES (?, ?, ?, ?)
                 """;
 
         try(Connection conn =Conexao.conectar();
@@ -26,8 +26,9 @@ public class AlunoDAOImpl implements AlunoDAO {
             PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setString(1, aluno.getNome());
-            stmt.setString(2, aluno.getEmail());
-            stmt.setDate(3, Date.valueOf(aluno.getDataNascimento()));
+            stmt.setString(2, aluno.getCpf());
+            stmt.setString(3, aluno.getEmail());
+            stmt.setDate(4, Date.valueOf(aluno.getDataNascimento()));
 
             stmt.executeUpdate();
 
@@ -68,6 +69,10 @@ public class AlunoDAOImpl implements AlunoDAO {
                         rs.getString("nome")
                 );
 
+                aluno.setCpf(
+                        rs.getString("cpf")
+                );
+
                 aluno.setEmail(
                         rs.getString("email")
                 );
@@ -95,6 +100,7 @@ public class AlunoDAOImpl implements AlunoDAO {
         String sql = """
                 update aluno
                 set nome = ?,
+                cpf = ?,
                 email = ?,
                 data_nascimento = ?
                 where id_aluno = ?
@@ -105,9 +111,10 @@ public class AlunoDAOImpl implements AlunoDAO {
 
         ){
             stmt.setString(1, aluno.getNome());
-            stmt.setString(2, aluno.getEmail());
-            stmt.setDate(3, Date.valueOf(aluno.getDataNascimento()));
-            stmt.setInt(4, aluno.getIdAluno());
+            stmt.setString(2, aluno.getCpf());
+            stmt.setString(3, aluno.getEmail());
+            stmt.setDate(4, Date.valueOf(aluno.getDataNascimento()));
+            stmt.setInt(5, aluno.getIdAluno());
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {

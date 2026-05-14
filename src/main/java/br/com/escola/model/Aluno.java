@@ -6,8 +6,10 @@ public class Aluno {
 
     private int idAluno;
     private String nome;
+    private String cpf;
     private String email;
     private LocalDate dataNascimento;
+
 
     public Aluno() {
     }
@@ -15,12 +17,15 @@ public class Aluno {
     public Aluno(
             int idAluno,
             String nome,
+            String cpf,
             String email,
             LocalDate dataNascimento
+
     ) {
 
         this.idAluno = idAluno;
         this.nome = nome;
+        this.cpf = cpf;
         this.email = email;
         this.dataNascimento = dataNascimento;
     }
@@ -42,6 +47,10 @@ public class Aluno {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getCpf() {return cpf;}
+
+    public void setCpf(String cpf) {this.cpf = cpf;}
 
     public String getEmail() {
         return email;
@@ -65,6 +74,7 @@ public class Aluno {
         return "Aluno{" +
                 "idAluno=" + idAluno +
                 ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
                 ", dataNascimento=" + dataNascimento +
                 '}';

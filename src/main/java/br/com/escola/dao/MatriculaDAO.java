@@ -15,4 +15,6 @@ public interface MatriculaDAO {
     void deletar(int idMatricula);
 
     void deletarPorAluno(int idAluno);
+
+
 }

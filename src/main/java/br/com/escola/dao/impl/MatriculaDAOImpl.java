@@ -240,4 +240,64 @@ public class MatriculaDAOImpl
             e.printStackTrace();
         }
     }
+    public void listarDetalhado(){
+
+        String sql =  """
+            SELECT
+                a.nome AS aluno,
+                t.nome AS turma,
+                p.nome AS professor,
+                i.nome AS instituicao,
+                m.data_matricula
+            FROM matricula m
+            
+            INNER JOIN aluno a
+                ON m.id_aluno = a.id_aluno
+                
+            INNER JOIN turma t
+                ON m.id_turma = t.id_turma
+                
+            INNER JOIN professor p
+                ON t.id_professor = p.id_professor
+                
+            INNER JOIN instituicao i
+                ON t.id_instituicao = i.id_instituicao
+                """;
+
+        try(
+                Connection conn = Conexao.conectar();
+
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                ResultSet rs = stmt.executeQuery()
+        ) {
+            System.out.println("\n=== RELATORIO ORGANIZADO ===");
+
+            while (rs.next()) {
+
+                System.out.printf(
+                        "%-15s %-32s %-20s %-25s %-15s%n",
+
+                        rs.getString("aluno"),
+
+                        rs.getString("turma"),
+
+                        rs.getString("professor"),
+
+                        rs.getString("instituicao"),
+
+                        rs.getDate("data_matricula")
+                );
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(
+                    "Erro no relatório."
+            );
+
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 package br.com.escola;
 
+import br.com.escola.model.Turma;
+import br.com.escola.dao.impl.TurmaDAOImpl;
 import br.com.escola.dao.ProfessorDAO;
 import br.com.escola.dao.impl.ProfessorDAOImpl;
 import br.com.escola.model.Professor;
@@ -20,6 +22,8 @@ public class App {
         AlunoDAOImpl alunoDAO =
                 new AlunoDAOImpl();
 
+        TurmaDAOImpl turmaDAO = new TurmaDAOImpl();
+
         ProfessorDAOImpl professorDAO = new ProfessorDAOImpl();
 
         MatriculaDAOImpl matriculaDAO =
@@ -31,15 +35,26 @@ public class App {
 
             System.out.println("\n===== SISTEMA ESCOLAR =====");
 
+            System.out.println("--------Gestão Aluno---------");
             System.out.println("1 - Cadastrar aluno");
             System.out.println("2 - Listar alunos");
             System.out.println("3 - Atualizar aluno");
             System.out.println("4 - Remover aluno");
             System.out.println("5 - Relatorio Detalhado");
+            System.out.println();
+            System.out.println("--------Gestão Professor---------");
             System.out.println("6 - Cadastrar professor");
             System.out.println("7 - Listar professor");
             System.out.println("8 - Atualizar professor");
             System.out.println("9 - Remover professor");
+
+            System.out.println("--------Gestão Turma---------");
+            System.out.println("10 - Cadastrar turma");
+            System.out.println("11 - Listar turmas");
+            System.out.println("12 - Atualizar turma");
+            System.out.println("13 - Remover turma");
+
+
 
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opção: ");
@@ -51,7 +66,6 @@ public class App {
             switch (opcao) {
 
                 case 1:
-
                     Aluno novoAluno = new Aluno();
 
                     System.out.print("Nome: ");
@@ -75,30 +89,22 @@ public class App {
                     scanner.nextLine();
 
                     novoAluno.setDataNascimento(LocalDate.of(ano, mes, dia));
-
                     alunoDAO.cadastrar(novoAluno);
-
                     break;
 
                 case 2:
-
                     List<Aluno> alunos = alunoDAO.listar();
 
                     for (Aluno aluno : alunos) {
-
                         System.out.println(aluno);
-
                         System.out.println("----------------");
                     }
-
                     break;
 
                 case 3:
-
                     Aluno alunoAtualizar = new Aluno();
 
                     System.out.print("ID do aluno: ");
-
                     alunoAtualizar.setIdAluno(scanner.nextInt());
 
                     scanner.nextLine();
@@ -125,11 +131,9 @@ public class App {
 
                     alunoAtualizar.setDataNascimento(LocalDate.of(ano, mes, dia));
                     alunoDAO.atualizar(alunoAtualizar);
-
                     break;
 
                 case 4:
-
                     System.out.print("ID do aluno: ");
                     int idAluno = scanner.nextInt();
                     scanner.nextLine();
@@ -137,12 +141,12 @@ public class App {
                     matriculaDAO.deletarPorAluno(idAluno);
 
                     alunoDAO.deletar(idAluno);
-
                     break;
+
                 case 5:
                     matriculaDAO.listarDetalhado();
-
                     break;
+
                 case 6:
                     Professor professor = new Professor();
 
@@ -160,16 +164,13 @@ public class App {
 
                     scanner.nextLine();
                     professorDAO.cadastrar(professor);
-
                     break;
 
                 case 7:
                     professorDAO.listar().forEach(System.out::println);
-
                     break;
 
                 case 8:
-
                     Professor atualizarProfessor = new Professor();
 
                     System.out.print("ID Professor: ");
@@ -191,23 +192,74 @@ public class App {
 
                     scanner.nextLine();
                     professorDAO.atualizar(atualizarProfessor);
-
-                    break;
-
-                case 0:
-
-                    System.out.println("Encerrando sistema...");
-
                     break;
 
                 case 9:
-
                     System.out.print("ID Professor: ");
                     int idProfessor = scanner.nextInt();
 
                     scanner.nextLine();
                     professorDAO.deletar(idProfessor);
+                    break;
 
+                case 10:
+                    Turma turma = new Turma();
+
+                    System.out.print("Nome da turma: ");
+                    turma.setNome(scanner.nextLine());
+
+                    System.out.print("Periodo (MANHA/TARDE/NOITE): ");
+                    turma.setPeriodo(scanner.nextLine());
+
+                    System.out.print("ID Professor: ");
+                    turma.setIdProfessor(scanner.nextInt());
+
+                    System.out.print("ID Instituição: ");
+                    turma.setIdInstituicao(scanner.nextInt());
+
+                    scanner.nextLine();
+                    turmaDAO.cadastrar(turma);
+                    break;
+
+                case 11:
+                    turmaDAO.listar().forEach(System.out::println);
+                    break;
+
+                case 12:
+                    Turma atualizarTurma = new Turma();
+
+                    System.out.print("ID Turma: ");
+                    atualizarTurma.setIdTurma(scanner.nextInt());
+
+                    scanner.nextLine();
+
+                    System.out.print("Novo nome: ");
+                    atualizarTurma.setNome(scanner.nextLine());
+
+                    System.out.print("Novo período: ");
+                    atualizarTurma.setPeriodo(scanner.nextLine());
+
+                    System.out.print("Novo ID Professor: ");
+                    atualizarTurma.setIdProfessor(scanner.nextInt());
+
+                    System.out.print("Novo ID Instituição: ");
+                    atualizarTurma.setIdInstituicao(scanner.nextInt());
+
+                    scanner.nextLine();
+                    turmaDAO.atualizar(atualizarTurma);
+                    break;
+
+                case 13:
+                    System.out.print("ID Turma: ");
+                    int idTurma = scanner.nextInt();
+
+                    scanner.nextLine();
+                    turmaDAO.deletar(idTurma);
+                    break;
+
+                    //Sair do programa
+                case 0:
+                    System.out.println("Encerrando sistema...");
                     break;
 
                 default:

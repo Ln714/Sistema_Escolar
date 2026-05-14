@@ -1,12 +1,13 @@
 package br.com.escola;
 
-import br.com.escola.model.Turma;
+
+import br.com.escola.dao.impl.MatriculaDAOImpl;
+import br.com.escola.model.Matricula;
 import br.com.escola.dao.impl.TurmaDAOImpl;
-import br.com.escola.dao.ProfessorDAO;
+import br.com.escola.model.Turma;
 import br.com.escola.dao.impl.ProfessorDAOImpl;
 import br.com.escola.model.Professor;
 import br.com.escola.dao.impl.AlunoDAOImpl;
-import br.com.escola.dao.impl.MatriculaDAOImpl;
 import br.com.escola.model.Aluno;
 
 import java.time.LocalDate;
@@ -19,15 +20,13 @@ public class App {
 
         Scanner scanner = new Scanner(System.in);
 
-        AlunoDAOImpl alunoDAO =
-                new AlunoDAOImpl();
+        AlunoDAOImpl alunoDAO = new AlunoDAOImpl();
 
         TurmaDAOImpl turmaDAO = new TurmaDAOImpl();
 
         ProfessorDAOImpl professorDAO = new ProfessorDAOImpl();
 
-        MatriculaDAOImpl matriculaDAO =
-                new MatriculaDAOImpl();
+        MatriculaDAOImpl matriculaDAO = new MatriculaDAOImpl();
 
         int opcao;
 
@@ -35,28 +34,33 @@ public class App {
 
             System.out.println("\n===== SISTEMA ESCOLAR =====");
 
-            System.out.println("--------Gestão Aluno---------");
+            System.out.println("\n--------Gestão Aluno---------");
             System.out.println("1 - Cadastrar aluno");
             System.out.println("2 - Listar alunos");
             System.out.println("3 - Atualizar aluno");
             System.out.println("4 - Remover aluno");
             System.out.println("5 - Relatorio Detalhado");
-            System.out.println();
-            System.out.println("--------Gestão Professor---------");
+
+            System.out.println("\n--------Gestão Professor---------");
             System.out.println("6 - Cadastrar professor");
             System.out.println("7 - Listar professor");
             System.out.println("8 - Atualizar professor");
             System.out.println("9 - Remover professor");
 
-            System.out.println("--------Gestão Turma---------");
+            System.out.println("\n--------Gestão Turma---------");
             System.out.println("10 - Cadastrar turma");
             System.out.println("11 - Listar turmas");
             System.out.println("12 - Atualizar turma");
             System.out.println("13 - Remover turma");
 
+            System.out.println("\n--------Gestão Matricula---------");
+            System.out.println("14 - Cadastrar matrícula");
+            System.out.println("15 - Listar matrículas");
+            System.out.println("16 - Atualizar matrícula");
+            System.out.println("17 - Remover matrícula");
 
 
-            System.out.println("0 - Sair");
+            System.out.println("\n0 - Sair");
             System.out.print("Escolha uma opção: ");
 
             opcao = scanner.nextInt();
@@ -256,6 +260,52 @@ public class App {
                     scanner.nextLine();
                     turmaDAO.deletar(idTurma);
                     break;
+
+                case 14:
+                    Matricula matricula = new Matricula();
+
+                    System.out.print("ID Aluno: ");
+                    matricula.setIdAluno(scanner.nextInt());
+
+                    System.out.print("ID Turma: ");
+                    matricula.setIdTurma(scanner.nextInt());
+
+                    scanner.nextLine();
+
+                    matricula.setDataMatricula(LocalDate.now());
+                    matriculaDAO.cadastrar(matricula);
+                    break;
+
+                case 15:
+                    matriculaDAO.listar().forEach(System.out::println);
+                    break;
+
+                case 16:
+                    Matricula atualizarMatricula = new Matricula();
+
+                    System.out.print("ID Matrícula: ");
+                    atualizarMatricula.setIdMatricula(scanner.nextInt());
+
+                    System.out.print("Novo ID Aluno: ");
+                    atualizarMatricula.setIdAluno(scanner.nextInt());
+
+                    System.out.print("Novo ID Turma: ");
+                    atualizarMatricula.setIdTurma(scanner.nextInt());
+
+                    scanner.nextLine();
+
+                    atualizarMatricula.setDataMatricula(LocalDate.now());
+                    matriculaDAO.atualizar(atualizarMatricula);
+                    break;
+                case 17:
+                    System.out.print("ID Matrícula: ");
+                    int idMatricula = scanner.nextInt();
+
+                    scanner.nextLine();
+
+                    matriculaDAO.deletar(idMatricula);
+                    break;
+
 
                     //Sair do programa
                 case 0:

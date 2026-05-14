@@ -5,11 +5,8 @@ import java.time.LocalDate;
 public class Matricula {
 
     private int idMatricula;
-
     private int idAluno;
-
     private int idTurma;
-
     private LocalDate dataMatricula;
 
     public Matricula() {
